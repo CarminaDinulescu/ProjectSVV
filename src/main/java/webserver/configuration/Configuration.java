@@ -1,5 +1,7 @@
 package webserver.configuration;
 
+import webserver.exception.InvalidPort;
+
 public class Configuration {
 
     private int port;
@@ -8,8 +10,8 @@ public class Configuration {
         return port;
     }
 
-    public void setPort(int port) {
-        this.port = port;
+    public boolean setPort(int port) throws InvalidPort {
+        return false;
     }
 
 }
