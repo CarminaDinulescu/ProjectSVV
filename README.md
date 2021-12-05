@@ -57,7 +57,7 @@
 Junit
 ![junit](https://user-images.githubusercontent.com/91951827/143719522-05fa4a97-196b-4d30-a44a-db8dac34fca5.png)
 
-SpotBug
+Static Analysis
 ![2021-11-27 (9)](https://user-images.githubusercontent.com/91951827/143719554-66fac532-1c7f-46aa-8f31-917d342bf5bd.png)
 
 Dynamic Analysis
