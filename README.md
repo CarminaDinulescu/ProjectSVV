@@ -53,3 +53,19 @@
     </dependencies>
 
 </project>
+
+Junit
+![junit](https://user-images.githubusercontent.com/91951827/143719522-05fa4a97-196b-4d30-a44a-db8dac34fca5.png)
+
+Static Analysis
+![2021-11-27 (9)](https://user-images.githubusercontent.com/91951827/143719554-66fac532-1c7f-46aa-8f31-917d342bf5bd.png)
+
+Dynamic Analysis
+![2021-11-27 (6)](https://user-images.githubusercontent.com/91951827/143719569-c32229bf-fcc5-4524-84b4-c65486e3c2f7.png)
+
+![2021-11-27 (7)](https://user-images.githubusercontent.com/91951827/143719571-d4fa8054-f382-4dd8-b52b-9e6b33f66d05.png)
+![2021-11-27 (8)](https://user-images.githubusercontent.com/91951827/143719574-ba440133-4dab-4d04-8cb3-96d97173d223.png)
+
+Junit updates
+
+
