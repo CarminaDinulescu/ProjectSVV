@@ -1,4 +1,6 @@
-package webserver.http;
+package webserver.exception;
+
+import webserver.http.HttpStatusCode;
 
 public class HttpParsingException extends Exception{
 

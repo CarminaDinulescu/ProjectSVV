@@ -1,10 +1,12 @@
 package webserver.http;
 
+import webserver.exception.BadHttpVersion;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public enum HttpVersion {
-    HTTP_1_1("HTTP/1.1",1,1);
+    HTTP_1_1("HTTP/1.1", 1 , 1);
 
     public final String LITERAL;
     public final int MAJOR;
@@ -16,33 +18,28 @@ public enum HttpVersion {
         this.MINOR = MINOR;
     }
 
-    private static final Pattern httpVersionRegexPattern = Pattern.compile("^HTTP/(?<major>\\d+).(?<minor>\\d)");
+    private static final Pattern httpVersionRegexPattern = Pattern.compile("^HTTP/(?<major>\\d+).(?<minor>\\d+)");
 
-    public static HttpVersion getRequestCompatibleVersion (String literalVersion) throws BadHttpVersionException {
-
+    public static HttpVersion getBestCompatibleVersion(String literalVersion) throws BadHttpVersion {
         Matcher matcher = httpVersionRegexPattern.matcher(literalVersion);
-        if(!matcher.find() || matcher.groupCount() != 2) {
-            throw new BadHttpVersionException();
+        if (!matcher.find() || matcher.groupCount() != 2) {
+            throw new BadHttpVersion();
         }
-
         int major = Integer.parseInt(matcher.group("major"));
         int minor = Integer.parseInt(matcher.group("minor"));
 
         HttpVersion tempBestCompatible = null;
-
-        for(HttpVersion version : HttpVersion.values()) {
+        for (HttpVersion version : HttpVersion.values()) {
             if (version.LITERAL.equals(literalVersion)) {
-                return  version;
-            }
-            else {
-                if(version.MAJOR == major) {
-                    if(version.MINOR < minor) {
+                return version;
+            } else {
+                if (version.MAJOR == major) {
+                    if (version.MINOR < minor) {
                         tempBestCompatible = version;
                     }
                 }
             }
         }
-
         return tempBestCompatible;
     }
 }

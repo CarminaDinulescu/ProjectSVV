@@ -2,32 +2,86 @@ package webserver.main;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import webserver.configuration.Configuration;
 import webserver.configuration.ConfigurationManager;
 import webserver.core.ServerThread;
+import webserver.exception.HttpParsingException;
+import webserver.http.Status;
 
-import java.io.IOException;
+import java.io.*;
+import java.net.ServerSocket;
+import java.util.Scanner;
 
-public class WebServer extends Thread {
+public class WebServer {
 
-        private final static Logger LOGGER = LoggerFactory.getLogger(WebServer.class);
+    private final static Logger LOGGER = LoggerFactory.getLogger(WebServer.class);
+    static ServerSocket serverSocket;
 
-        public static void main(String[] args) {
+    public static void main(String[] args) throws IOException, InterruptedException {
 
-            LOGGER.info("Server starting..");
+        Status.init();
+        ConfigurationManager manager = new ConfigurationManager();
 
-            ConfigurationManager.getInstance().loadConfigFile("src/main/resources/http.json");
-            Configuration conf = ConfigurationManager.getInstance().getCurrentConfiguration();
+        LOGGER.info("Using port: " + manager.getPort());
 
-            LOGGER.info("Using port: " + conf.getPort());
+        Scanner input = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
 
-            ServerThread serverThread = null;
+       try {
+            scanner = new Scanner(new File("src/main/resources/TestSite/a.html"));
+       } catch (FileNotFoundException e) {
+            e.printStackTrace();
+       }
+       scanner.close();
 
+        String html1="<html><head><title>Simple Server</title></head><body><ch1>this page is a test</ch1></body></html>";
+        boolean flag = true;
+
+        if(Status.getServerState()==1) {
             try {
-                serverThread = new ServerThread(conf.getPort());
+                ServerThread serverThread = new ServerThread(manager.getPort(), manager.getWebroot(), html1);
                 serverThread.start();
-            } catch (IOException e) {
+            }
+            catch (IOException e) {
                 e.printStackTrace();
             }
         }
+
+        while (flag) {
+            printServerSettingsMenu();
+
+            try {
+                switch (input.nextInt()) {
+                    case 0:
+                        Status.stopWebServer();
+                        break;
+                    case 1:
+                        Status.startWebServer();
+                        break;
+
+                    case 2:
+                        Status.maintenanceWebServer();
+                        break;
+                    case 3:
+                        System.exit(0);
+                }
+
+            } catch (HttpParsingException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public static void printServerSettingsMenu(){
+        LOGGER.info("Server settings: ");
+        LOGGER.info("Current state: " + Status.getServerState());
+        LOGGER.info("-> Set to state 0 (Stopped)");
+        LOGGER.info("-> Set to state 1 (Running)");
+        LOGGER.info("-> Set to state 2 (Maintenance)");
+        LOGGER.info("-> Exit program: 3");
+        LOGGER.info("Enter your option:");
+//        System.out.flush();
+    }
+
 }
+
+

@@ -1,52 +1,81 @@
 package webserver.configuration;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import webserver.exception.InvalidPort;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
 public class ConfigurationManager {
 
-    private String fileName = null;
-    private static ConfigurationManager myConfigManager;
-    private static Configuration myCurrentConfiguration;
+    private final static Logger LOGGER = LoggerFactory.getLogger(ConfigurationManager.class);
 
-    public ConfigurationManager(String fileName) {
-        this.fileName = fileName;
+    public static String webroot = null;
+    public int port = 10008;
+    public static String maintenanceRoot = null;
+    public static String webRootHtml = "<html><head><title></title></head><body><ch1></ch1></body></html>";
+    public static String maintenanceRootHtml = "<html><head><title></title></head><body><ch1></ch1></body></html>";
+
+    public int getPort() {
+        return port;
     }
 
-    public static ConfigurationManager getInstance() {
-        if (myConfigManager == null)
-            myConfigManager = new ConfigurationManager(getInstance().fileName);
-        return myConfigManager;
-    }
-
-    public Configuration getCurrentConfiguration() {
-            return myCurrentConfiguration;
-    }
-
-    public String getFileName( String key) {
-        return null;
-    }
-
-    public boolean setFileName( String key, String name) {
+    public boolean setPort(int port) throws InvalidPort {
+        if(PortNumberValidator.validate(port)) {
+            this.port = port;
+            return true;
+        }else this.port=0;
         return false;
     }
 
-    public void loadConfiguration(){}
+    public String getWebroot() {return webroot;}
 
-    public boolean setPort(int port) {
-
-        if(!PortNumberValidator.validate(port))
+    public Boolean setWebroot(String webroot) {
+        if(webroot==null)
             return false;
+        this.webroot = webroot;
         return true;
     }
 
-    public String getWebRoot() {
-        return null;
+    public static String getMaintenanceRoot() {
+        return maintenanceRoot;
     }
 
-    public String getMaintenance() {
-        return null;
+    public static void setMaintenanceRoot(String maintenanceRoot) {
+        ConfigurationManager.maintenanceRoot = maintenanceRoot;
     }
 
-    public void setWebRoot(String webRoot) {}
+    public static String getWebrootHtml(){
+        if(webroot != null){
 
-    public void setMaintenance(String maintenance) {}
+            Scanner scanner = null;
+            try {
+                scanner = new Scanner(new File(webroot));
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            webRootHtml = scanner.useDelimiter("\\Z").next();
+            scanner.close();
 
+        }
+        return webRootHtml;
+    }
+
+    public static String getMaintenanceHtml(){
+        if(maintenanceRoot != null){
+
+            Scanner scanner = null;
+            try {
+                scanner = new Scanner(new File(maintenanceRoot));
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            maintenanceRootHtml = scanner.useDelimiter("\\Z").next();
+            scanner.close();
+
+        }
+        return maintenanceRootHtml;
+    }
 }

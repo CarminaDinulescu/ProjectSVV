@@ -16,9 +16,9 @@ public enum HttpStatusCode {
     SERVER_ERROR_505_HTTP_VERSION_NOT_SUPPORTED(505,"Http Version Not Supported"),
 
     /*--- SERVER STATUS ---*/
-    SERVER_STATUS_OK (200, "OK"),
-    SERVER_STATUS_STOP (1, "STOP"),
-    SERVER_STATUS_EXIT (2, "OK"),
+    SERVER_STATUS_OK (200, "OK! Server is Running"),
+    SERVER_STATUS_STOP (0, "Server is Stopped"),
+    SERVER_STATUS_EXIT (2, "Exit Server"),
     ;
 
 
