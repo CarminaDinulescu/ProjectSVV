@@ -7,7 +7,7 @@ import webserver.core.ServerThread;
 import webserver.exception.HttpParsingException;
 import webserver.http.Status;
 
-import java.io.*;
+import java.io.IOException;
 import java.net.ServerSocket;
 import java.util.Scanner;
 
@@ -16,7 +16,7 @@ public class WebServer {
     private final static Logger LOGGER = LoggerFactory.getLogger(WebServer.class);
     static ServerSocket serverSocket;
 
-    public static void main(String[] args) throws IOException, InterruptedException {
+    public static void main(String[] args) throws IOException, InterruptedException, HttpParsingException {
 
         Status.init();
         ConfigurationManager manager = new ConfigurationManager();
@@ -24,64 +24,47 @@ public class WebServer {
         LOGGER.info("Using port: " + manager.getPort());
 
         Scanner input = new Scanner(System.in);
-        Scanner scanner = new Scanner(System.in);
+        String html1 = "";
 
-       try {
-            scanner = new Scanner(new File("src/main/resources/TestSite/a.html"));
-       } catch (FileNotFoundException e) {
-            e.printStackTrace();
-       }
-       scanner.close();
 
-        String html1="<html><head><title>Simple Server</title></head><body><ch1>this page is a test</ch1></body></html>";
-        boolean flag = true;
+        try {
+            ServerThread serverThread = new ServerThread(manager.getPort(), manager.getWebroot(), html1);
+            serverThread.start();
 
-        if(Status.getServerState()==1) {
-            try {
-                ServerThread serverThread = new ServerThread(manager.getPort(), manager.getWebroot(), html1);
-                serverThread.start();
-            }
-            catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+            while (true) {
 
-        while (flag) {
-            printServerSettingsMenu();
+                try {
+                    switch (input.nextInt()) {
+                        case 0:
+                            Status.stopWebServer();
+                            LOGGER.info("Server stopped");
+                            break;
+                        case 1:
+                            Status.startWebServer();
+                            html1 = ConfigurationManager.getWebrootHtml();
+                            LOGGER.info("Server Started");
+                            break;
 
-            try {
-                switch (input.nextInt()) {
-                    case 0:
-                        Status.stopWebServer();
-                        break;
-                    case 1:
-                        Status.startWebServer();
-                        break;
-
-                    case 2:
-                        Status.maintenanceWebServer();
-                        break;
-                    case 3:
-                        System.exit(0);
+                        case 2:
+                            Status.maintenanceWebServer();
+                            html1 = ConfigurationManager.getMaintenanceHtml();
+                            LOGGER.info("Maintenance");
+                            break;
+                        case 3:
+                            System.exit(0);
+                            serverSocket.close();
+                    }
+                } catch (HttpParsingException e) {
+                    e.printStackTrace();
                 }
-
-            } catch (HttpParsingException e) {
-                e.printStackTrace();
             }
+
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
-
-    public static void printServerSettingsMenu(){
-        LOGGER.info("Server settings: ");
-        LOGGER.info("Current state: " + Status.getServerState());
-        LOGGER.info("-> Set to state 0 (Stopped)");
-        LOGGER.info("-> Set to state 1 (Running)");
-        LOGGER.info("-> Set to state 2 (Maintenance)");
-        LOGGER.info("-> Exit program: 3");
-        LOGGER.info("Enter your option:");
-//        System.out.flush();
-    }
-
 }
+
+
 
 
