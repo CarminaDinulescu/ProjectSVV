@@ -69,3 +69,7 @@ Dynamic Analysis
 Junit updates
 
 ![2021-12-05 (2)](https://user-images.githubusercontent.com/91951827/144749249-dd580bfd-2610-419b-9197-95ab457ac3d3.png)
+
+Junit update 2.0
+
+![2021-12-21 (2)](https://user-images.githubusercontent.com/91951827/146969654-851abe1a-f69b-4e6f-8384-c08513c5f75c.png)
