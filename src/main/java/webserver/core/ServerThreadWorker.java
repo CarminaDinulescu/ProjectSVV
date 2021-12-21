@@ -46,27 +46,27 @@ public class ServerThreadWorker extends Thread {
                     "   </td><td> <img src=\"a.jpg\" height=\"30px\" />\n" +
                     "   </td></tr>\n" +
                     "\n" +
-                    "   <tr><td>  <a href=\"aaa/b.html\">do general relative links work</a> <br />\n" +
+                    "   <tr><td>  <a href=\"http://labs.cs.upt.ro/~oose/pmwiki.php/SVV/Lab1\">do general relative links work</a> <br />\n" +
                     "   </td><td> <img src=\"aaa/yes.jpg\" height=\"30px\" />\n" +
                     "   </td></tr>\n" +
                     "\n" +
-                    "   <tr><td>  <a href=\"/c.html\">do simple absolute links work</a> <br />\n" +
+                    "   <tr><td>  <a href=\"http://labs.cs.upt.ro/~oose/pmwiki.php/SVV/Lab2\">do simple absolute links work</a> <br />\n" +
                     "   </td><td> <img src=\"/yes.jpg\" height=\"30px\" />\n" +
                     "   </td></tr>\n" +
                     "\n" +
-                    "   <tr><td>  <a href=\"/aaa/bbb/c.html\">do general absolute links work</a> <br />\n" +
+                    "   <tr><td>  <a href=\"http://labs.cs.upt.ro/~oose/pmwiki.php/SVV/Lab3\">do general absolute links work</a> <br />\n" +
                     "   </td><td> <img src=\"/aaa/bbb/yes.jpg\" height=\"30px\" />\n" +
                     "   </td></tr>\n" +
                     "\n" +
-                    "   <tr><td>  <a href=\"a b.html\">do URLs with spaces work</a> <br />\n" +
+                    "   <tr><td>  <a href=\"http://labs.cs.upt.ro/~oose/pmwiki.php/SVV/Lab5\">do URLs with spaces work</a> <br />\n" +
                     "   </td><td> <img src=\"ye s.jpg\" height=\"30px\" />\n" +
                     "   </td></tr>\n" +
                     "\n" +
-                    "   <tr><td>  <a href=\"a%20b.html\">do URLs with %20 work</a> <br />\n" +
+                    "   <tr><td>  <a href=\"http://labs.cs.upt.ro/~oose/pmwiki.php/SVV/Lab6\">do URLs with %20 work</a> <br />\n" +
                     "   </td><td> <img src=\"ye%20s.jpg\" height=\"30px\" />\n" +
                     "   </td></tr>\n" +
                     "\n" +
-                    "   <tr><td>  <a href=\"a.txt\">do TXT files work</a> <br />\n" +
+                    "   <tr><td>  <a href=\"http://labs.cs.upt.ro/~oose/pmwiki.php/SVV/Lab7\">do TXT files work</a> <br />\n" +
                     "   </td><td> \n" +
                     "   </td></tr>\n" +
                     "\n" +

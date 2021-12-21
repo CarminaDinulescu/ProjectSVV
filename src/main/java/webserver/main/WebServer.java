@@ -28,8 +28,9 @@ public class WebServer {
 
 
         try {
-            ServerThread serverThread = new ServerThread(manager.getPort(), manager.getWebroot(), html1);
-            serverThread.start();
+
+            LOGGER.info("Current Status: " + Status.getServerState());
+            LOGGER.info("Choose state: ");
 
             while (true) {
 
@@ -40,17 +41,24 @@ public class WebServer {
                             LOGGER.info("Server stopped");
                             break;
                         case 1:
+                            Status.init();
                             Status.startWebServer();
                             html1 = ConfigurationManager.getWebrootHtml();
+                            LOGGER.info("Current Status: " + Status.getServerState());
                             LOGGER.info("Server Started");
+
+                            ServerThread serverThread = new ServerThread(manager.getPort(), manager.getWebroot(), html1);
+                            serverThread.start();
                             break;
 
                         case 2:
                             Status.maintenanceWebServer();
                             html1 = ConfigurationManager.getMaintenanceHtml();
+                            LOGGER.info("Current Status: " + Status.getServerState());
                             LOGGER.info("Maintenance");
                             break;
                         case 3:
+
                             System.exit(0);
                             serverSocket.close();
                     }
