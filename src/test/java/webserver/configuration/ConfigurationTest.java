@@ -3,40 +3,52 @@ package webserver.configuration;
 import org.junit.jupiter.api.Test;
 import webserver.exception.InvalidPort;
 
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class ConfigurationTest {
-    @Test
-    public void test() throws InvalidPort
+
+   @Test
+    public void testGoodPortNumber() throws InvalidPort
     {
-        ConfigurationManager manager = new ConfigurationManager("Valid");
-        manager.setPort(1);
+        ConfigurationManager configuration = new ConfigurationManager();
+        configuration.setPort(10008);
     }
 
     @Test
     public void testInvalidPortNumber() throws InvalidPort {
-        Configuration  conf = new Configuration ();
-        assertFalse(conf.setPort(0));
+        ConfigurationManager configuration = new ConfigurationManager();
+        assertFalse(configuration.setPort(0));
     }
 
     @Test
-    public void testValidPortNumber() throws InvalidPort {
-        Configuration  conf = new Configuration ();
-        assertFalse(conf.setPort(8080));
+    public void testGoodPort() throws InvalidPort {
+        int port = 8080;
+        int expectedPort = 8080;
+        ConfigurationManager manager = new ConfigurationManager();
+        manager.setPort(port);
+        assertEquals(expectedPort, manager.getPort());
     }
 
     @Test
-    public void testValidLoadConfiguration()
-    {
-        ConfigurationManager conf = new ConfigurationManager("valid");
-        conf.loadConfiguration();
+    public void testBadPort() throws InvalidPort {
+        int port = 0;
+        int expectedPort = 0;
+        ConfigurationManager manager = new ConfigurationManager();
+        manager.setPort(port);
+        assertEquals(expectedPort, manager.getPort());
     }
 
     @Test
-    public void testInvalidLoadConfigurationFile()
-    {
-        ConfigurationManager conf = new ConfigurationManager("invalid");
-        conf.loadConfiguration();
+    public void testBadWebroot(){
+        String webroot = null;
+        ConfigurationManager manager = new ConfigurationManager();
+        assertFalse(manager.setWebroot(webroot));
+    }
+
+    @Test
+    public void testGoodWebroot(){
+        String webroot = "   ";
+        ConfigurationManager manager = new ConfigurationManager();
+        assertTrue(manager.setWebroot(webroot));
     }
 }
